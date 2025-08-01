@@ -132,7 +132,7 @@
         .item-image {
             width: 80px;
             height: 80px;
-            filter: drop-shadow(0 0 5px #ff00ff);
+<!--            filter: drop-shadow(0 0 5px #ff00ff);-->
         }
 
         .stats-panel {
@@ -308,11 +308,16 @@
 
             <div class="main-panel">
                 <div class="item-slot">
+                    <img
+                        src="img/160item.jpg"
+                        class="item-image"
+                        alt="裝備圖示"
+                      />
 <!--                    <div class="item-star-badge">20星+</div>-->
-                    <svg class="item-image" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ff00ff" stroke-width="15"/>
-                        <circle cx="50" cy="50" r="40" fill="none" stroke="#f06292" stroke-width="10"/>
-                    </svg>
+<!--                    <svg class="item-image" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">-->
+<!--                        <circle cx="50" cy="50" r="40" fill="none" stroke="#ff00ff" stroke-width="15"/>-->
+<!--                        <circle cx="50" cy="50" r="40" fill="none" stroke="#f06292" stroke-width="10"/>-->
+<!--                    </svg>-->
                 </div>
 
                 <div class="stats-panel">
@@ -417,6 +422,7 @@
 
         const itemLevel = document.getElementById('itemLevel');
 
+        const img    = document.querySelector('.item-image');
         const levelDisplay = document.querySelector('.level');
         const upgradeCostDisplay = document.querySelector('.upgradeCost');
         const testDisplay = document.querySelector('.test');
@@ -474,6 +480,8 @@
 
         function updateItemLevelDisplay() {
             upgradeCostDisplay.textContent = cost[currentStar][Number(itemLevel.value)]+'億'
+            const newSrc = `img/${itemLevel.value}item.jpg`
+            img.src = newSrc
         }
         // 每次切換下拉，立即更新顯示
         itemLevel.addEventListener('change', updateItemLevelDisplay);
@@ -484,6 +492,7 @@
         function clearAll() {
           location.reload();
         }
+
     </script>
 
 </body>
