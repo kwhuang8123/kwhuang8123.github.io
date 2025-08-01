@@ -347,7 +347,7 @@
                          </select>
                      </label>
                      <button class="btn btn-enhance" onclick="enhanceItem()">⊕ 強化</button>
-                     <button class="btn btn-cancel">➲ 清空</button>
+                     <button class="btn btn-cancel" onclick="clearAll()">➲ 重設</button>
                  </div>
             </div>
              </div>
@@ -480,6 +480,10 @@
 
         // 頁面載入完成後先呼叫一次
         updateItemLevelDisplay();
+
+        function clearAll() {
+          location.reload();
+        }
     </script>
 
 </body>
