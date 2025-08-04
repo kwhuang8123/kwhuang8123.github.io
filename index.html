@@ -282,7 +282,36 @@
           border-radius: 4px;
           padding: 0.3em 0.6em;
         }
+        /* Star 力面板容器 */
+        .star-panel {
+          margin-bottom: 15px;       /* 與 main-panel 之間的間距 */
+        }
 
+        /* 每一列都用 flex 排版 */
+        .star-row {
+          display: flex;
+          justify-content: center;
+          margin-bottom: 8px;        /* 兩列之間留空 */
+        }
+
+        /* 每顆星星的基本間距 */
+        .star {
+          font-size: 1.2em;          /* 可依需求放大或縮小 */
+          margin-right: 2px;
+        }
+
+        /* 每滿 5 顆後額外留 10px */
+        .star-row .star:nth-child(5n) {
+          margin-right: 10px;
+        }
+
+        /* 去掉每列最後一顆的右邊距 */
+        .star-row .star:last-child {
+          margin-right: 0;
+        }
+        .star[data-state="inactive"] {
+          color: #ccc;
+        }
     </style>
 </head>
 <body>
@@ -308,6 +337,31 @@
             </div>
 
             <div class="tab-content" data-content="starForce">
+            <!--    星星顯示            -->
+            <div class="star-panel">
+              <div class="star-row">
+                <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+                <span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span><span class="star">⭐</span>
+              </div>
+              <div class="star-row">
+                <span class="star" id="16" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="17" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="18" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="19" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="20" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="21" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="22" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="23" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="24" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="25" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="26" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="27" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="28" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="29" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+                <span class="star" id="30" style="background: linear-gradient(to right, #3c3c3c 100%, yellow 0%);-webkit-background-clip: text; color: transparent;">⭐</span>
+              </div>
+            </div>
 
             <div class="main-panel">
                 <div class="item-slot">
@@ -480,6 +534,7 @@
                 logMessage = `${count}. ${currentStar}星 > 15星, ${result}, 單次花費: ${singleCost.toFixed(2)}億, 總花費: ${totalCost.toFixed(2)}億\n`
                 currentStar = 15;
             }
+            updateStarsColor();
 
             successProbDisplay.textContent = (prob[currentStar].success*100).toFixed(2) + "%";
             failProbDisplay.textContent = (prob[currentStar].fail*100).toFixed(2) + "%";
@@ -511,11 +566,11 @@
         // 頁面載入完成後先呼叫一次
         updateItemLevelDisplay();
 
+        <!-- 一件強化(直接完成) -->
         function enhanceToTargetStar() {
           const targetStarSelect = document.getElementById('targetStar');
           const targetStar = parseInt(targetStarSelect.value, 10);
 
-          // 當前星力已經 >= 目標星力時，不執行任何動作
           if (currentStar >= targetStar) {
             alert(`目前星力 (${currentStar}) 已達到或超過目標 (${targetStar})！`);
             return;
@@ -529,6 +584,7 @@
 <!--          alert(`已成功強化至 ${currentStar} 星力！`);-->
         }
 
+        <!-- 一鍵強化(有延遲) -->
         function enhanceAsync() {
           const target = parseInt(document.getElementById('targetStar').value, 10);
           if (currentStar < target) {
@@ -537,6 +593,25 @@
           } else {
             alert(`完成, 目標星力: ${currentStar}星, 總花費:${totalCost.toFixed(2)}億`);
           }
+        }
+        <!--    更新星星顏色    -->
+        function updateStarsColor() {
+          const stars = document.querySelectorAll('.star-panel .star');
+          stars.forEach((starEl, idx) => {
+            if (idx < currentStar) {
+              // 已填滿：直接以黃色實心星顯示
+              starEl.textContent           = '⭐';
+              starEl.style.background      = '';
+              starEl.style.webkitBackgroundClip = '';
+              starEl.style.color           = 'yellow';
+            } else {
+              // 未填滿：灰色文字裁切背景
+              starEl.textContent           = '⭐';
+              starEl.style.background      = 'linear-gradient(to right, #3c3c3c 0%, #3c3c3c 100%)';
+              starEl.style.webkitBackgroundClip = 'text';
+              starEl.style.color           = 'transparent';
+            }
+          });
         }
 
         function clearAll() {
