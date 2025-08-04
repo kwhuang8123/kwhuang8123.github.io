@@ -213,6 +213,8 @@
 
         .actions {
             display: flex;
+            flex-wrap: nowrap;
+            gap: 0px;
             justify-content: flex-end;
             align-items: center;
         }
@@ -224,14 +226,15 @@
         }
 
         .btn {
-            padding: 8px 25px;
+            padding: 8px 16px;
             border: 2px solid;
             border-radius: 5px;
             color: #fff;
             font-weight: bold;
             cursor: pointer;
-            margin-left: 10px;
+            margin-left: 5px;
             font-size: 1em;
+            white-space: nowrap;
         }
 
         .btn-enhance {
@@ -343,14 +346,33 @@
                      <span class="upgradeCost" style="margin-left: auto; font-weight: bold; color: #fff;">9億</span>
                  </div>
                  <div class="actions">
-                     <label class="checkbox-label">
-                         裝備等級:
-                         <select id="itemLevel">
-                          <option value=250>250</option>
-                          <option value=200>200</option>
-                          <option value=160 selected>160</option>
-                         </select>
-                     </label>
+                   <div class="level-group">
+                    <label class="checkbox-label">
+                      裝備等級:
+                      <select id="itemLevel">
+                        <option value="250">250</option>
+                        <option value="200">200</option>
+                        <option value="160" selected>160</option>
+                      </select>
+                    </label>
+
+                    <label class="checkbox-label">
+                      目標⭐:
+                      <select id="targetStar">
+                        <option value="16">16⭐</option>
+                        <option value="17">17⭐</option>
+                        <option value="18">18⭐</option>
+                        <option value="19">19⭐</option>
+                        <option value="20">20⭐</option>
+                        <option value="21">21⭐</option>
+                        <option value="22" selected>22⭐</option>
+                        <option value="23">23⭐</option>
+                        <option value="24">24⭐</option>
+                        <option value="25">25⭐</option>
+                      </select>
+                    </label>
+                   </div>
+                     <button class="btn btn-enhance" id="targetStarButton" onclick="enhanceAsync()">一鍵升星</button>
                      <button class="btn btn-enhance" onclick="enhanceItem()">⊕ 強化</button>
                      <button class="btn btn-cancel" onclick="clearAll()">➲ 重設</button>
                  </div>
@@ -489,9 +511,39 @@
         // 頁面載入完成後先呼叫一次
         updateItemLevelDisplay();
 
+        function enhanceToTargetStar() {
+          const targetStarSelect = document.getElementById('targetStar');
+          const targetStar = parseInt(targetStarSelect.value, 10);
+
+          // 當前星力已經 >= 目標星力時，不執行任何動作
+          if (currentStar >= targetStar) {
+            alert(`目前星力 (${currentStar}) 已達到或超過目標 (${targetStar})！`);
+            return;
+          }
+
+          // 以 while 迴圈重複呼叫 enhanceItem()
+          while (currentStar < targetStar) {
+            enhanceItem();
+          }
+
+<!--          alert(`已成功強化至 ${currentStar} 星力！`);-->
+        }
+
+        function enhanceAsync() {
+          const target = parseInt(document.getElementById('targetStar').value, 10);
+          if (currentStar < target) {
+            enhanceItem();
+            setTimeout(enhanceAsync, 50);  // 每 50ms 再跑一次
+          } else {
+            alert(`完成, 目標星力: ${currentStar}星, 總花費:${totalCost.toFixed(2)}億`);
+          }
+        }
+
         function clearAll() {
           location.reload();
         }
+
+
 
     </script>
 
