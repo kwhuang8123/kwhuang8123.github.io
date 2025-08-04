@@ -487,7 +487,7 @@
 
             currentStarText = currentStar + "星 > " + (currentStar+1) + "星";
             levelDisplay.textContent = currentStarText;
-            upgradeCostDisplay.textContent = cost[currentStar][160]+'億';
+            upgradeCostDisplay.textContent = cost[currentStar][itemLevel.value]+'億';
             testDisplay.textContent = "強化結果: "+ result + " " + draw.toFixed(4);
             totalCostDisplay.textContent = "🔘總花費: " + totalCost.toFixed(2) + "億";
 
