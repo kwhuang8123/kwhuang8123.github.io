@@ -611,6 +611,10 @@
               starEl.style.webkitBackgroundClip = 'text';
               starEl.style.color           = 'transparent';
             }
+            starEl.onclick = () => {
+                currentStar = idx + 1;
+                updateStarsColor()
+                };
           });
         }
 
@@ -618,10 +622,7 @@
           location.reload();
         }
 
-
-
     </script>
 
 </body>
 </html>
-```
